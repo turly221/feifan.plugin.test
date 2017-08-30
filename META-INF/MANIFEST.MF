@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: feifan.plugin.test;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: feifan.plugin.test.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.11.1",
+ org.slf4j.api;bundle-version="1.7.2"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/javaparser-core-3.3.4-SNAPSHOT.jar,
+ lib/javaparser-core-3.3.4-SNAPSHOT-sources.jar
+Export-Package: feifan.plugin.test,
+ feifan.plugin.test.handlers

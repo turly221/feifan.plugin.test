@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Sample Category"
+            id="feifan.plugin.test.commands.category">
+      </category>
+      <command
+            name="generate report"
+            categoryId="feifan.plugin.test.commands.category"
+            id="feifan.plugin.test.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="feifan.plugin.test.commands.sampleCommand"
+            class="feifan.plugin.test.handlers.TestHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="feifan.plugin.test.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Java Methods"
+               mnemonic="M"
+               id="feifan.plugin.test.menus.sampleMenu">
+            <command
+                  commandId="feifan.plugin.test.commands.sampleCommand"
+                  mnemonic="S"
+                  id="feifan.plugin.test.menus.sampleCommand">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="feifan.plugin.test.toolbars.sampleToolbar">
+            <command
+                  commandId="feifan.plugin.test.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  tooltip="Say hello world"
+                  id="feifan.plugin.test.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>
