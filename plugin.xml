@@ -52,7 +52,7 @@
             <command
                   commandId="feifan.plugin.test.commands.sampleCommand"
                   icon="icons/sample.gif"
-                  tooltip="Say hello world"
+                  tooltip="generate project java method reports"
                   id="feifan.plugin.test.toolbars.sampleCommand">
             </command>
          </toolbar>
