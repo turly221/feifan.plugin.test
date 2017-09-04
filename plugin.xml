@@ -1,62 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            name="Sample Category"
-            id="feifan.plugin.test.commands.category">
-      </category>
-      <command
-            name="generate report"
-            categoryId="feifan.plugin.test.commands.category"
-            id="feifan.plugin.test.commands.sampleCommand">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            commandId="feifan.plugin.test.commands.sampleCommand"
-            class="feifan.plugin.test.handlers.TestHandler">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="feifan.plugin.test.commands.sampleCommand"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+6"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </key>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               label="Java Methods"
-               mnemonic="M"
-               id="feifan.plugin.test.menus.sampleMenu">
-            <command
-                  commandId="feifan.plugin.test.commands.sampleCommand"
-                  mnemonic="S"
-                  id="feifan.plugin.test.menus.sampleCommand">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="feifan.plugin.test.toolbars.sampleToolbar">
-            <command
-                  commandId="feifan.plugin.test.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  tooltip="generate project java method reports"
-                  id="feifan.plugin.test.toolbars.sampleCommand">
-            </command>
-         </toolbar>
-      </menuContribution>
-   </extension>
-
+  <!-- Add ui command -->
+  <extension point="org.eclipse.ui.commands">
+    <category id="feifan.plugin.test.commands.category" name="Java Methods Command"/>
+    <command categoryId="feifan.plugin.test.commands.category" id="feifan.plugin.test.commands.generateReport" name="generate report"/>
+  </extension>
+  <!-- Add handler -->
+  <extension point="org.eclipse.ui.handlers">
+    <handler class="feifan.plugin.test.handlers.TestHandler" commandId="feifan.plugin.test.commands.generateReport"/>
+  </extension>
+  <extension point="org.eclipse.ui.bindings">
+    <key commandId="feifan.plugin.test.commands.generateReport" contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+6"/>
+  </extension>
+  <!-- Add Menu and tool bar menu -->
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+      <menu id="feifan.plugin.test.menus.sampleMenu" label="Java Methods" mnemonic="M">
+        <command commandId="feifan.plugin.test.commands.generateReport" id="feifan.plugin.test.menus.generateReport" mnemonic="S"/>
+      </menu>
+    </menuContribution>
+    <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+      <toolbar id="feifan.plugin.test.toolbars.sampleToolbar">
+        <command commandId="feifan.plugin.test.commands.generateReport" icon="icons/sample.gif" id="feifan.plugin.test.toolbars.generateReport" tooltip="generate project java method reports" label="Generate Project Java Methods Reports"/>
+      </toolbar>
+    </menuContribution>
+  </extension>
+  <!-- Add preference -->
+  <extension point="org.eclipse.ui.preferencePages">
+    <page class="feifan.plugin.test.preference.GenerateReportPoperties" id="feifan.plugin.test.preference.generateReportPoperties" name="Generate Methods Report"/>
+  </extension>
+  <!-- Add preference default settings -->
+  <extension point="org.eclipse.core.runtime.preferences">
+    <scope name="Generate Methods Report" class="feifan.plugin.test.preference.GenerateReportPoperties"/>
+    <initializer class="feifan.plugin.test.preference.GenerateReportPopertiesInit"></initializer>
+  </extension>
+  <!-- Add pop up menu for project -->
+  <extension point="org.eclipse.ui.popupMenus">
+    <objectContribution
+        objectClass="org.eclipse.core.resources.IProject"
+        id="feifan.plugin.test.contributeToProject">
+      <action
+        label="Generate Methods Report"
+        class="feifan.plugin.test.popup.actions.GenerateReportPopup"
+        menubarPath="additions"
+        enablesFor="1"
+        id="feifan.plugin.test.popupAction">
+      </action>
+    </objectContribution>
+  </extension>
 </plugin>

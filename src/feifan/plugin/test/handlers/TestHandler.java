@@ -32,6 +32,8 @@ import org.w3c.dom.Element;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 
+import feifan.plugin.test.Activator;
+
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
  * 
@@ -42,12 +44,17 @@ public class TestHandler extends AbstractHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(TestHandler.class);
 	private static final String javaFileExtension = "java";
+	private static final String reportName = "ProjectJavaMethodsReport.xml";
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		IWorkbenchPage activePage = window.getActivePage();
 		IEditorPart activeEditor = activePage.getActiveEditor();
+		String filePath = Activator.getDefault().getPreferenceStore().getString("FolderPath");
+		String successMessage = Activator.getDefault().getPreferenceStore().getString("SuccessMessage");
+		logger.info("filePath: " + filePath);
+		logger.info("successMessage: " + successMessage);
 
 		if (activeEditor != null) {
 			IEditorInput input = activeEditor.getEditorInput();
@@ -85,7 +92,7 @@ public class TestHandler extends AbstractHandler {
 						Transformer transformer = transformerFactory.newTransformer();
 						DOMSource source = new DOMSource(doc);
 
-						StreamResult result = new StreamResult(new File("/Users/turly/Desktop/sample.xml"));
+						StreamResult result = new StreamResult(new File(filePath+File.separator+reportName));
 
 						// Output to console for testing
 						// StreamResult result = new StreamResult(System.out);
@@ -93,20 +100,23 @@ public class TestHandler extends AbstractHandler {
 						transformer.transform(source, result);
 
 						logger.info("File saved!");
+						MessageDialog.openInformation(window.getShell(), "File saved!",
+								successMessage);
 					} catch (CoreException e) {
-						e.printStackTrace();
+						logger.debug("CoreException: "+e.getMessage());
+						
 					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.debug("FileNotFoundException: "+e.getMessage());
+						
 					} catch (ParserConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.debug("ParserConfigurationException: "+e.getMessage());
+
 					} catch (TransformerConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.debug("TransformerConfigurationException: "+e.getMessage());
+
 					} catch (TransformerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logger.debug("TransformerException: "+e.getMessage());
+
 					}
 				}
 			}
@@ -170,66 +180,5 @@ public class TestHandler extends AbstractHandler {
 			}
 		}
 	}
-/*
-	private void createMethodsReport() {
-		try {
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-			// root elements
-			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("Project");
-			doc.appendChild(rootElement);
-
-			// project name
-			String projectName = "test project name";
-			Attr projAttr = doc.createAttribute("Name");
-			projAttr.setValue(projectName);
-			rootElement.setAttributeNode(projAttr);
-
-			// Java file elements
-			Element file = doc.createElement("File");
-			rootElement.appendChild(file);
-
-			// File name
-			String fileName = "test file name";
-			Attr fileAttr = doc.createAttribute("Name");
-			fileAttr.setValue(fileName);
-			file.setAttributeNode(fileAttr);
-
-			// Starting line elements
-			Element startLine = doc.createElement("startLine");
-			startLine.appendChild(doc.createTextNode("startLine"));
-			file.appendChild(startLine);
-
-			// Ending line elements
-			Element endLine = doc.createElement("endLine");
-			endLine.appendChild(doc.createTextNode("endLine"));
-			file.appendChild(endLine);
-
-			// write the content into xml file
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			DOMSource source = new DOMSource(doc);
-
-			StreamResult result = new StreamResult(new File("/Users/turly/Desktop/sample.xml"));
-
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-
-			transformer.transform(source, result);
-
-			logger.info("File saved!");
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
 
 }
