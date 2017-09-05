@@ -4,7 +4,6 @@ import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.StringFieldEditor;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.slf4j.Logger;
@@ -32,17 +31,9 @@ public class GenerateReportPoperties extends FieldEditorPreferencePage implement
 	
 	@Override
     public void createFieldEditors() {
-		final Composite parent = getFieldEditorParent();
-	    
-		DirectoryFieldEditor directoryFieldEditor = new DirectoryFieldEditor(FOLDER_PATH, "&Save report in:", parent);
-		directoryFieldEditor.setPage(this);
-		directoryFieldEditor.setPreferenceStore(getPreferenceStore());
-		StringFieldEditor stringFieldEditor = new StringFieldEditor(SUCCESS_MESSAGE, "&Success Message:", parent);
-		stringFieldEditor.setPage(this);
-		stringFieldEditor.setPreferenceStore(getPreferenceStore());
-        addField(directoryFieldEditor);
-        addField(stringFieldEditor);
-        parent.update();
+        addField(new DirectoryFieldEditor(FOLDER_PATH, "&Save report in:", getFieldEditorParent()));
+        addField(new StringFieldEditor(SUCCESS_MESSAGE, "&Success Message:", getFieldEditorParent()));
+
         logger.info("in createFieldEditors: "+FOLDER_PATH+": "+getPreferenceStore().getString(FOLDER_PATH));
 		logger.info("in createFieldEditors: "+SUCCESS_MESSAGE+": "+getPreferenceStore().getString(SUCCESS_MESSAGE));
     }
@@ -61,8 +52,12 @@ public class GenerateReportPoperties extends FieldEditorPreferencePage implement
     protected void performDefaults() {
     		getPreferenceStore().setValue(FOLDER_PATH, getPreferenceStore().getDefaultString(FOLDER_PATH));
     		getPreferenceStore().setValue(SUCCESS_MESSAGE, getPreferenceStore().getDefaultString(SUCCESS_MESSAGE));
+    		
+    		super.performDefaults();
+    		
 		logger.info("in performDefaults: "+FOLDER_PATH+": "+getPreferenceStore().getString(FOLDER_PATH));
 		logger.info("in performDefaults: "+SUCCESS_MESSAGE+": "+getPreferenceStore().getString(SUCCESS_MESSAGE));
+		
     }
     
     @Override
