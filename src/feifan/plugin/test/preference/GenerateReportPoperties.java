@@ -25,7 +25,6 @@ public class GenerateReportPoperties extends FieldEditorPreferencePage implement
 		store.setValue(FOLDER_PATH, store.getString(FOLDER_PATH)!=null&&!"".equals(store.getString(FOLDER_PATH))?store.getString(FOLDER_PATH):store.getDefaultString(FOLDER_PATH));
 		store.setValue(SUCCESS_MESSAGE, store.getString(SUCCESS_MESSAGE)!=null&&!"".equals(store.getString(SUCCESS_MESSAGE))?store.getString(SUCCESS_MESSAGE):store.getDefaultString(SUCCESS_MESSAGE));
 		setPreferenceStore(store);
-		logger.info("in GenerateReportPoperties");
     }
 	
 	
@@ -33,19 +32,11 @@ public class GenerateReportPoperties extends FieldEditorPreferencePage implement
     public void createFieldEditors() {
         addField(new DirectoryFieldEditor(FOLDER_PATH, "&Save report in:", getFieldEditorParent()));
         addField(new StringFieldEditor(SUCCESS_MESSAGE, "&Success Message:", getFieldEditorParent()));
-
-        logger.info("in createFieldEditors: "+FOLDER_PATH+": "+getPreferenceStore().getString(FOLDER_PATH));
-		logger.info("in createFieldEditors: "+SUCCESS_MESSAGE+": "+getPreferenceStore().getString(SUCCESS_MESSAGE));
     }
 
     @Override
     public void init(IWorkbench workbench) {
-
-
-		logger.info("in init: "+FOLDER_PATH+": "+getPreferenceStore().getString(FOLDER_PATH));
-		logger.info("in init: "+SUCCESS_MESSAGE+": "+getPreferenceStore().getString(SUCCESS_MESSAGE));
         setDescription("Demonstrate preference:");
-        
     }
     
     @Override
@@ -54,9 +45,6 @@ public class GenerateReportPoperties extends FieldEditorPreferencePage implement
     		getPreferenceStore().setValue(SUCCESS_MESSAGE, getPreferenceStore().getDefaultString(SUCCESS_MESSAGE));
     		
     		super.performDefaults();
-    		
-		logger.info("in performDefaults: "+FOLDER_PATH+": "+getPreferenceStore().getString(FOLDER_PATH));
-		logger.info("in performDefaults: "+SUCCESS_MESSAGE+": "+getPreferenceStore().getString(SUCCESS_MESSAGE));
 		
     }
     

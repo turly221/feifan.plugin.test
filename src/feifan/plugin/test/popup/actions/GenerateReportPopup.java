@@ -7,12 +7,15 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import feifan.plugin.test.Activator;
+
 public class GenerateReportPopup implements IObjectActionDelegate{
-	private IWorkbenchWindow window; 
 	@Override
 	public void run(IAction arg0) {
-		MessageDialog.openInformation(window.getShell(), "Pop Up Menu",
-				"run pop up menu command");
+		IWorkbenchWindow window = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow();
+		MessageDialog.openInformation(window.getShell(), "Popup Menu Message",
+				"To run the process");
+		
 	}
 
 	@Override

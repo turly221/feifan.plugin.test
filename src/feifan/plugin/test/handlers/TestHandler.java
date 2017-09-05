@@ -53,8 +53,9 @@ public class TestHandler extends AbstractHandler {
 		IEditorPart activeEditor = activePage.getActiveEditor();
 		String filePath = Activator.getDefault().getPreferenceStore().getString("FolderPath");
 		String successMessage = Activator.getDefault().getPreferenceStore().getString("SuccessMessage");
-		logger.info("filePath: " + filePath);
-		logger.info("successMessage: " + successMessage);
+		successMessage += "\nFile saved in"+filePath+File.separator+reportName;
+		
+		boolean error = false;
 
 		if (activeEditor != null) {
 			IEditorInput input = activeEditor.getEditorInput();
@@ -99,24 +100,30 @@ public class TestHandler extends AbstractHandler {
 
 						transformer.transform(source, result);
 
-						logger.info("File saved!");
-						MessageDialog.openInformation(window.getShell(), "File saved!",
-								successMessage);
+						
 					} catch (CoreException e) {
 						logger.debug("CoreException: "+e.getMessage());
-						
+						error = true;
 					} catch (FileNotFoundException e) {
 						logger.debug("FileNotFoundException: "+e.getMessage());
-						
+						error = true;
 					} catch (ParserConfigurationException e) {
 						logger.debug("ParserConfigurationException: "+e.getMessage());
-
+						error = true;
 					} catch (TransformerConfigurationException e) {
 						logger.debug("TransformerConfigurationException: "+e.getMessage());
-
+						error = true;
 					} catch (TransformerException e) {
 						logger.debug("TransformerException: "+e.getMessage());
-
+						error = true;
+					} finally {
+						if (error) {
+							MessageDialog.openInformation(window.getShell(), "Failed to Generate Report!",
+									"Failed to Generate Report!");
+						} else {
+							MessageDialog.openError(window.getShell(), "File saved!",
+									successMessage);
+						}
 					}
 				}
 			}
@@ -174,8 +181,7 @@ public class TestHandler extends AbstractHandler {
 						}
 					}
 				} catch (CoreException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.debug("error in find element in folders: " + e.getMessage());
 				}
 			}
 		}
