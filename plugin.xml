@@ -1,52 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-  <!-- Add ui command -->
-  <extension point="org.eclipse.ui.commands">
-    <category id="feifan.plugin.test.commands.category" name="Java Methods Command"/>
-    <command categoryId="feifan.plugin.test.commands.category" id="feifan.plugin.test.commands.generateReport" name="generate report"/>
-  </extension>
-  <!-- Add handler -->
-  <extension point="org.eclipse.ui.handlers">
-    <handler class="feifan.plugin.test.handlers.TestHandler" commandId="feifan.plugin.test.commands.generateReport"/>
-  </extension>
-  <extension point="org.eclipse.ui.bindings">
-    <key commandId="feifan.plugin.test.commands.generateReport" contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+6"/>
-  </extension>
-  <!-- Add Menu and tool bar menu -->
-  <extension point="org.eclipse.ui.menus">
-    <menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-      <menu id="feifan.plugin.test.menus.sampleMenu" label="Java Methods" mnemonic="M">
-        <command commandId="feifan.plugin.test.commands.generateReport" id="feifan.plugin.test.menus.generateReport" mnemonic="S"/>
-      </menu>
-    </menuContribution>
-    <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-      <toolbar id="feifan.plugin.test.toolbars.sampleToolbar">
-        <command commandId="feifan.plugin.test.commands.generateReport" icon="icons/sample.gif" id="feifan.plugin.test.toolbars.generateReport" tooltip="generate project java method reports" label="Generate Project Java Methods Reports"/>
-      </toolbar>
-    </menuContribution>
-  </extension>
-  <!-- Add preference -->
-  <extension point="org.eclipse.ui.preferencePages">
-    <page class="feifan.plugin.test.preference.GenerateReportPoperties" id="feifan.plugin.test.preference.generateReportPoperties" name="Generate Methods Report"/>
-  </extension>
-  <!-- Add preference default settings -->
-  <extension point="org.eclipse.core.runtime.preferences">
-    <scope name="Generate Methods Report" class="feifan.plugin.test.preference.GenerateReportPoperties"/>
-    <initializer class="feifan.plugin.test.preference.GenerateReportPopertiesInit"></initializer>
-  </extension>
-  <!-- Add pop up menu for project -->
-  <extension point="org.eclipse.ui.popupMenus">
-    <objectContribution
-        objectClass="org.eclipse.core.resources.IProject"
-        id="feifan.plugin.test.contributeToProject">
-      <action
-        label="Generate Methods Report"
-        class="feifan.plugin.test.popup.actions.GenerateReportPopup"
-        menubarPath="additions"
-        enablesFor="1"
-        id="feifan.plugin.test.popupAction">
-      </action>
-    </objectContribution>
-  </extension>
+	<!-- Add ui command -->
+	<extension point="org.eclipse.ui.commands">
+		<category id="feifan.plugin.test.commands.category" name="Java Methods Command"/>
+		<command categoryId="feifan.plugin.test.commands.category" id="feifan.plugin.test.commands.generateReport" name="generate report"/>
+	</extension>
+	<!-- Add handler -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler class="feifan.plugin.test.handlers.TestHandler" commandId="feifan.plugin.test.commands.generateReport"/>
+	</extension>
+	<extension point="org.eclipse.ui.bindings">
+		<key commandId="feifan.plugin.test.commands.generateReport" contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+6"/>
+	</extension>
+	<!-- Add Menu and tool bar menu -->
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+			<menu id="feifan.plugin.test.menus.sampleMenu" label="Java Methods" mnemonic="M">
+				<command commandId="feifan.plugin.test.commands.generateReport" id="feifan.plugin.test.menus.generateReport" mnemonic="S"/>
+			</menu>
+		</menuContribution>
+		<menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+			<toolbar id="feifan.plugin.test.toolbars.sampleToolbar">
+				<command commandId="feifan.plugin.test.commands.generateReport" icon="icons/sample.gif" id="feifan.plugin.test.toolbars.generateReport" label="Generate Project Java Methods Reports" tooltip="generate project java method reports"/>
+			</toolbar>
+		</menuContribution>
+	</extension>
+	<!-- Add preference -->
+	<extension point="org.eclipse.ui.preferencePages">
+		<page class="feifan.plugin.test.preference.GenerateReportPoperties" id="feifan.plugin.test.preference.generateReportPoperties" name="Generate Methods Report"/>
+	</extension>
+	<!-- Add preference default settings -->
+	<extension point="org.eclipse.core.runtime.preferences">
+		<scope class="feifan.plugin.test.preference.GenerateReportPoperties" name="Generate Methods Report"/>
+		<initializer class="feifan.plugin.test.preference.GenerateReportPopertiesInit"/>
+	</extension>
+	<!-- Add pop up menu for project -->
+	<extension point="org.eclipse.ui.popupMenus">
+		<objectContribution id="feifan.plugin.test.contributeToProject" objectClass="org.eclipse.core.resources.IProject">
+			<action class="feifan.plugin.test.popup.actions.GenerateReportPopup" enablesFor="1" id="feifan.plugin.test.popupAction" label="Generate Methods Report" menubarPath="additions"/>
+		</objectContribution>
+	</extension>
+	<!-- Add Navigator -->
+	<extension point="org.eclipse.ui.views">
+		<category id="feifan.plugin.test.navigator.category" name="Project Method"/>
+		<view allowMultiple="false" class="feifan.plugin.test.navigator.CommonNavigator" icon="icons/sample.gif" id="feifan.plugin.test.navigator.view" name="ProjectMethodView"/>
+	</extension>
+	<extension point="org.eclipse.ui.navigator.viewer">
+		<viewer viewerId="feifan.plugin.test.navigator.view"/>
+		<viewerContentBinding vierwerId="feifan.plugin.test.navigator.view">
+			<includes>
+				<contentExtension pattern="org.eclipse.ui.navigator.resourceContent"/>
+				<contentExtension pattern="org.eclipse.ui.navigator.resources.filters.*"/>
+				<contentExtension pattern="org.eclipse.ui.navigator.resources.linkHelper"/>
+			</includes>
+		</viewerContentBinding>
+		<viewerActionBinding vierwerId="feifan.plugin.test.navigator.view">
+			<includes>
+				<actionExtension pattern="org.eclipse.ui.navigator.resources.*"/>
+			</includes>
+		</viewerActionBinding>
+	</extension>
+	<extension point="org.eclipse.ui.navigator.navigatorContent">
+		<commonFilter id="org.eclipse.ui.navigator.filters.ignoreNonJavaProjects" name="Ignore Non-Java Projects">
+			<filterExpression>
+				<not>
+					<adapt type="org.eclipse.core.resources.IProject">
+						<test property="org.eclipse.core.resources.projectNature" value="org.eclipse.jdt.core.javanature"/>
+					</adapt>
+				</not>
+			</filterExpression>
+		</commonFilter>
+	</extension>
 </plugin>

@@ -36,6 +36,7 @@ public class GenerateReportPoperties extends FieldEditorPreferencePage implement
 
     @Override
     public void init(IWorkbench workbench) {
+    		logger.info("init GenerateReportPoperties");
         setDescription("Demonstrate preference:");
     }
     

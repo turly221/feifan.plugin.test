@@ -3,3 +3,5 @@
 *.class
 bin/feifan/plugin/test/handlers/MethodVisitor.class
 bin/feifan/plugin/test/handlers/TestHandler.class
+*.class
+bin/feifan/plugin/test/handlers/MethodVisitor.class
