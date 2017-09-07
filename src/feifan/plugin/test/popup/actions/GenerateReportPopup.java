@@ -14,7 +14,8 @@ public class GenerateReportPopup implements IObjectActionDelegate{
 	public void run(IAction arg0) {
 		IWorkbenchWindow window = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow();
 		MessageDialog.openInformation(window.getShell(), "Popup Menu Message",
-				"To run the process");
+				"This is from Popup Menu");
+
 		
 	}
 

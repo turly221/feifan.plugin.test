@@ -10,10 +10,6 @@ import com.github.javaparser.ast.visitor.GenericListVisitorAdapter;
 public class MethodVisitor extends GenericListVisitorAdapter<HashMap<String, String>, Void> {
 	public List<HashMap<String, String>> visit(MethodDeclaration n, Void arg) {
 
-		/*
-		 * here you can access the attributes of the method. this method will be called
-		 * for all methods in this CompilationUnit, including inner class methods
-		 */
 		List<HashMap<String, String>> result = new ArrayList<>();
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("methodName", n.getDeclarationAsString(false, false));

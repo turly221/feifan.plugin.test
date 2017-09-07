@@ -2,7 +2,6 @@ package feifan.plugin.test.navigator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,15 +18,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.progress.UIJob;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -35,14 +29,13 @@ import com.github.javaparser.ast.CompilationUnit;
 import feifan.plugin.test.handlers.MethodVisitor;
 
 public class MethodsContentProvider implements ITreeContentProvider, IResourceChangeListener, IResourceDeltaVisitor {
-	private static final Logger logger = LoggerFactory.getLogger(MethodsContentProvider.class);
+//	private static final Logger logger = LoggerFactory.getLogger(MethodsContentProvider.class);
 
 	private static final Object[] NO_CHILDREN = new Object[0];
 
-	private static final Object JAVA_EXT = "java"; //$NON-NLS-1$
-
-	@SuppressWarnings("rawtypes")
-	private final Map/*<IFile, MethodsTreeData[]>*/ cachedModelMap = new HashMap();
+	private static final Object JAVA_EXT = "java";
+	
+	private final Map<IFile, MethodsTreeData[]> cachedModelMap = new HashMap<IFile, MethodsTreeData[]>();
 
 	private StructuredViewer viewer;
 	
@@ -77,7 +70,7 @@ public class MethodsContentProvider implements ITreeContentProvider, IResourceCh
 				try {
 					CompilationUnit cu = JavaParser.parse(modelFile.getRawLocation().makeAbsolute().toFile());
 					List<HashMap<String, String>> methodList = new MethodVisitor().visit(cu, null);
-					List methods = new ArrayList();
+					List<MethodsTreeData> methods = new ArrayList<MethodsTreeData>();
 
 					for (HashMap<String, String> hashMap : methodList) {
 						String methodName = hashMap.get("methodName");

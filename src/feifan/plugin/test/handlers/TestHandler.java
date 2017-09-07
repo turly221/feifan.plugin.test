@@ -34,12 +34,6 @@ import com.github.javaparser.ast.CompilationUnit;
 
 import feifan.plugin.test.Activator;
 
-/**
- * Our sample handler extends AbstractHandler, an IHandler base class.
- * 
- * @see org.eclipse.core.commands.IHandler
- * @see org.eclipse.core.commands.AbstractHandler
- */
 public class TestHandler extends AbstractHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(TestHandler.class);
@@ -118,10 +112,10 @@ public class TestHandler extends AbstractHandler {
 						error = true;
 					} finally {
 						if (error) {
-							MessageDialog.openInformation(window.getShell(), "Failed to Generate Report!",
+							MessageDialog.openError(window.getShell(), "Failed to Generate Report!",
 									"Failed to Generate Report!");
 						} else {
-							MessageDialog.openError(window.getShell(), "File saved!",
+							MessageDialog.openInformation(window.getShell(), "File saved!",
 									successMessage);
 						}
 					}

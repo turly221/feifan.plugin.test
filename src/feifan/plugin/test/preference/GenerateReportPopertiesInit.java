@@ -12,11 +12,9 @@ import feifan.plugin.test.Activator;
 public class GenerateReportPopertiesInit extends AbstractPreferenceInitializer {
 	private static final Logger logger = LoggerFactory.getLogger(GenerateReportPopertiesInit.class);
 	
-	//The identifiers for the preferences	
 	public static final String FOLDER_PATH = "FolderPath";
 	public static final String SUCCESS_MESSAGE = "SuccessMessage";
 
-	//The default values for the preferences
 	public static final String DEFAULT_FOLDER_PATH = System.getProperty("user.home")+File.separator+"Desktop";
 	public static final String DEFAULT_SUCCESS_MESSAGE = "File saved successfully!";
 

@@ -14,7 +14,6 @@ import feifan.plugin.test.Activator;
 public class GenerateReportPoperties extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	private static final Logger logger = LoggerFactory.getLogger(GenerateReportPoperties.class);
 
-	//The identifiers for the preferences	
 	public static final String FOLDER_PATH = "FolderPath";
 	public static final String SUCCESS_MESSAGE = "SuccessMessage";
 	public static final String GROUP_TIITLE = "Java Methods";
