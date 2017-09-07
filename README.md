@@ -1,7 +1,6 @@
-# feifan.plugin.test
-testing purpose
+Testing Purpose
 
-generate and xml report to extract all methods name, starting line and line in the current active project.
+Generate and xml report to extract all methods name, starting line and line in the current active project.
 
 ## Command Short Cut
 `cmd + 6` for mac
