@@ -7,7 +7,7 @@ import java.util.List;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.GenericListVisitorAdapter;
 
-class MethodVisitor extends GenericListVisitorAdapter<HashMap<String, String>, Void> {
+public class MethodVisitor extends GenericListVisitorAdapter<HashMap<String, String>, Void> {
 	public List<HashMap<String, String>> visit(MethodDeclaration n, Void arg) {
 
 		/*

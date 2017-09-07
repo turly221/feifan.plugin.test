@@ -44,7 +44,12 @@
 	<!-- Add Navigator -->
 	<extension point="org.eclipse.ui.views">
 		<category id="feifan.plugin.test.navigator.category" name="Project Method"/>
-		<view allowMultiple="false" class="feifan.plugin.test.navigator.CommonNavigator" icon="icons/sample.gif" id="feifan.plugin.test.navigator.view" name="ProjectMethodView"/>
+		<view 
+			allowMultiple="false" 
+			class="feifan.plugin.test.navigator.CommonNavigator" 
+			icon="icons/sample.gif" 
+			id="feifan.plugin.test.navigator.view" 
+			name="ProjectMethodView"/>
 	</extension>
 	<extension point="org.eclipse.ui.navigator.viewer">
 		<viewer viewerId="feifan.plugin.test.navigator.view"/>
@@ -62,14 +67,56 @@
 		</viewerActionBinding>
 	</extension>
 	<extension point="org.eclipse.ui.navigator.navigatorContent">
-		<commonFilter id="org.eclipse.ui.navigator.filters.ignoreNonJavaFiles" name="Ignore Non-Java Files">
+		<commonFilter 
+			id="org.eclipse.ui.navigator.filters.ignoreNonJavaProjects" 
+			name="Ignore Non-Java Projects">
 			<filterExpression>
 				<not>
-					<adapt type="org.eclipse.core.resources.IFile">
-						<test property="org.eclipse.core.resources.projectNature" value="org.eclipse.jdt.core.javanature"/>
+					<adapt type="org.eclipse.core.resources.IProject">
+						<test 
+							property="org.eclipse.core.resources.projectNature" 
+							value="org.eclipse.jdt.core.javanature"/>
 					</adapt>
 				</not>
 			</filterExpression>
 		</commonFilter>
 	</extension>
+	 <extension
+         point="org.eclipse.ui.navigator.navigatorContent">    
+      <navigatorContent 
+            id="feifan.plugin.test.navigator.methodsContent" 
+            name="Java File Methods"
+            contentProvider="feifan.plugin.test.navigator.MethodsContentProvider"
+            labelProvider="feifan.plugin.test.navigator.MethodsLabelProvider" 
+            activeByDefault="true"
+            icon="icons/sample.gif"
+            priority="normal" >
+         <triggerPoints>
+         	<or>
+	            <and>
+	               <instanceof value="org.eclipse.core.resources.IResource"/>
+	               <test
+	                     forcePluginActivation="true"
+	                     property="org.eclipse.core.resources.extension"
+	                     value="java"/>
+	            </and>
+				<instanceof value="feifan.plugin.test.navigator.MethodsTreeData"/>
+			</or>
+         </triggerPoints>
+         <possibleChildren>
+            <or>
+               <instanceof value="feifan.plugin.test.navigator.MethodsTreeData"/> 
+            </or>
+         </possibleChildren>
+      </navigatorContent>
+   </extension>
+   <!-- Bind the Properties content extension to the viewer -->
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding viewerId="feifan.plugin.test.navigator.view">
+         <includes>
+            <contentExtension pattern="feifan.plugin.test.navigator.methodsContent"/>
+         </includes>
+      </viewerContentBinding>
+   </extension>
 </plugin>
